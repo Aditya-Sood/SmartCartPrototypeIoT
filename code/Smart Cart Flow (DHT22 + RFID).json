@@ -1,0 +1,373 @@
+[
+    {
+        "id": "435e5a7a26e63f11",
+        "type": "tab",
+        "label": "Smart Cart Flow (DHT22 + RFID)",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "42971368e7b759ed",
+        "type": "mqtt in",
+        "z": "435e5a7a26e63f11",
+        "name": "mqtt-dht-temperature",
+        "topic": "node1/dht/temperature",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "d95200ee18d2ab51",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 160,
+        "y": 260,
+        "wires": [
+            [
+                "05e5305536af8717",
+                "27628236dd1ad413"
+            ]
+        ]
+    },
+    {
+        "id": "05e5305536af8717",
+        "type": "debug",
+        "z": "435e5a7a26e63f11",
+        "name": "temperature debug output",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 490,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "e83a605bcad653c4",
+        "type": "mqtt in",
+        "z": "435e5a7a26e63f11",
+        "name": "mqtt-dht-humidity",
+        "topic": "node1/dht/humidity",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "d95200ee18d2ab51",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 150,
+        "y": 340,
+        "wires": [
+            [
+                "904a2ecd90629a7b",
+                "7e4116fcaae22b96"
+            ]
+        ]
+    },
+    {
+        "id": "904a2ecd90629a7b",
+        "type": "debug",
+        "z": "435e5a7a26e63f11",
+        "name": "humidity debug output",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 470,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "27628236dd1ad413",
+        "type": "ui_chart",
+        "z": "435e5a7a26e63f11",
+        "name": "",
+        "group": "8897c43d15e26f1d",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "chart",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "60",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 410,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7e4116fcaae22b96",
+        "type": "ui_gauge",
+        "z": "435e5a7a26e63f11",
+        "name": "",
+        "group": "8897c43d15e26f1d",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "gauge",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 420,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "4675f9d5958bdce7",
+        "type": "Azure IoT Central",
+        "z": "435e5a7a26e63f11",
+        "scopeid": "0ne0055EC8D",
+        "deviceid": "2dnabvb7dy3",
+        "primarykey": "pxYNJXa9CiHE/LRSHLGJE8E7QRGMG3Xx9fBC9iqS7VA=",
+        "command1": "",
+        "command2": "",
+        "command3": "",
+        "command4": "",
+        "command5": "",
+        "transport": "mqtt",
+        "auth": "sas",
+        "certfile": "",
+        "certkeyfile": "",
+        "passwordi": "",
+        "x": 720,
+        "y": 140,
+        "wires": [
+            [
+                "df0c58661f0a7ee8"
+            ]
+        ]
+    },
+    {
+        "id": "df0c58661f0a7ee8",
+        "type": "debug",
+        "z": "435e5a7a26e63f11",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 940,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "1d323bcf478a3361",
+        "type": "function",
+        "z": "435e5a7a26e63f11",
+        "name": "PrepTemperaturePayload",
+        "func": "var data = msg.payload;\n\nmsg = {\n    'topic':'telemetry',\n    'payload':{\n        'TemperatureReading':data\n    },\n    'properties': [{'key':'$.sub','value':'sensors'}]\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 140,
+        "wires": [
+            [
+                "4675f9d5958bdce7"
+            ]
+        ]
+    },
+    {
+        "id": "bd638ab36253f462",
+        "type": "Azure IoT Central",
+        "z": "435e5a7a26e63f11",
+        "scopeid": "0ne0055EC8D",
+        "deviceid": "2dnabvb7dy3",
+        "primarykey": "pxYNJXa9CiHE/LRSHLGJE8E7QRGMG3Xx9fBC9iqS7VA=",
+        "command1": "",
+        "command2": "",
+        "command3": "",
+        "command4": "",
+        "command5": "",
+        "transport": "mqtt",
+        "auth": "sas",
+        "certfile": "",
+        "certkeyfile": "",
+        "passwordi": "",
+        "x": 720,
+        "y": 460,
+        "wires": [
+            [
+                "5f5a007be6ac4735"
+            ]
+        ]
+    },
+    {
+        "id": "5f5a007be6ac4735",
+        "type": "debug",
+        "z": "435e5a7a26e63f11",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 940,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "488221aed0c804d9",
+        "type": "function",
+        "z": "435e5a7a26e63f11",
+        "name": "PrepHumidityPayload",
+        "func": "var data = msg.payload;\n\nmsg = {\n    'topic':'telemetry',\n    'payload':{\n        'HumidityReading':data\n    },\n    'properties': [{'key':'$.sub','value':'sensors'}]\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 460,
+        "wires": [
+            [
+                "bd638ab36253f462"
+            ]
+        ]
+    },
+    {
+        "id": "148f8ef20c0706fa",
+        "type": "rc522",
+        "z": "435e5a7a26e63f11",
+        "name": "RFID Reader",
+        "blockedFor": "10",
+        "x": 160,
+        "y": 540,
+        "wires": [
+            [
+                "f273f2442f482aa8",
+                "dd8f7e767763c5ed"
+            ]
+        ]
+    },
+    {
+        "id": "f273f2442f482aa8",
+        "type": "debug",
+        "z": "435e5a7a26e63f11",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 380,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "dd8f7e767763c5ed",
+        "type": "mqtt out",
+        "z": "435e5a7a26e63f11",
+        "name": "mqtt-rfid-reader",
+        "topic": "node1/dht/rfid",
+        "qos": "0",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "d95200ee18d2ab51",
+        "x": 390,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "d95200ee18d2ab51",
+        "type": "mqtt-broker",
+        "name": "mqtt-server-on-rpi-for-m5",
+        "broker": "192.168.205.25:1883",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    },
+    {
+        "id": "8897c43d15e26f1d",
+        "type": "ui_group",
+        "name": "Dash Group",
+        "tab": "f49de5a9c91879e0",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "f49de5a9c91879e0",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
